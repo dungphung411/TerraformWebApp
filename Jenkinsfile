@@ -2,6 +2,8 @@ pipeline {
     agent any
     parameters {
         choice(name: 'ACTION', choices: 'apply\ndestroy', description: 'Select apply or destroy')
+    }
+
 
     stages {
         stage('Git Checkout') {
