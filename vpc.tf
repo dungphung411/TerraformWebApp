@@ -99,7 +99,7 @@ resource "aws_security_group" "ssh-security-group" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
    }
-  engress {
+  egress {
     description = "HTTPS Access"
     from_port   = 443
     to_port     = 443
