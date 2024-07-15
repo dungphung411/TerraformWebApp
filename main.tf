@@ -24,6 +24,7 @@ resource "aws_instance" "ec2_public" {
   associate_public_ip_address = true
   user_data = <<-EOF
            #!/bin/bash
+          sudo su 
           sudo apt update
           sudo apt install -y nginx 
           sudo systemctl start nginx
