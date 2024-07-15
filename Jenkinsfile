@@ -4,29 +4,38 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                     git branch: 'main', changelog: false, poll: false, url: 'https://github.com/dungphung411/Terraform-Blog.git'
-          }
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/dungphung411/Terraform-Blog.git'
+            }
         }
-        
-    #thisforcreate-delete-it-to-run 
-        stage ("terraform init") {
+        stage("Terraform Init") {
             steps {
                 bat ('terraform init') 
             }
         }
-        
-        stage ("terraform Action") {
+        stage("Terraform Plan") {
             steps {
-                echo "Terraform plan and apply"
-                bat ('terraform apply --auto-approve') 
-           }
-        }
-    #thisisfordestroy-delete-the-2-block-below-to-destroy
-        stage ("terraform destroy") {
-            steps {
-                echo "terraform destroy"
-                bat ('terraform destroy --auto-approve')
+                bat ('terraform plan -no-color > tfplan.txt')
+                bat ('type tfplan.txt')
             }
         }
-    }   
-}   
+        stage("Choose Action") {
+            steps {
+                script {
+                    def userInput = input(
+                        message: 'Choose an action:',
+                        parameters: [
+                            choice(name: 'ACTION', choices: 'apply\ndestroy', description: 'Select apply or destroy')
+                        ]
+                    )
+                    if (userInput.ACTION == 'apply') {
+                        echo "Applying Terraform changes"
+                        bat ('terraform apply --auto-approve')
+                    } else if (userInput.ACTION == 'destroy') {
+                        echo "Destroying Terraform resources"
+                        bat ('terraform destroy --auto-approve')
+                    }
+                }
+            }
+        }
+    }
+}
