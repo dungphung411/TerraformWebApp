@@ -23,7 +23,7 @@ resource "aws_instance" "ec2_public" {
   subnet_id                   = aws_subnet.public-subnet-1.id
   associate_public_ip_address = true
   user_data = <<-EOF
-           #!/bin/dash
+           #!/bin/bash
           sudo apt update
           sudo apt install -y nginx 
           sudo systemctl start nginx
@@ -38,7 +38,7 @@ resource "aws_instance" "ec2_public" {
 
 
   tags = {
-    "Name" = "EC2-PUBLIC"
+    "Name" = "EC2-PUBLIC_demo"
   }
   
  
