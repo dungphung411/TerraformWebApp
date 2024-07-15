@@ -22,26 +22,19 @@ pipeline {
                 bat ('type tfplan.txt')
             }
         }
-        stages {
         stage('Build') {
             steps {
                 script {
                     if (params.ACTION == 'apply') {
                         echo "Applying Terraform changes"
-                        bat 'terraform apply --auto-approve'
+                        bat ('terraform apply --auto-approve')
                     } else if (params.ACTION == 'destroy') {
                         echo "Destroying Terraform resources"
-                        bat 'terraform destroy --auto-approve'
+                        bat ('terraform destroy --auto-approve')
                     }
                 }
             }
         }
     }
-    post {
-        always {
-            echo "Build completed!"
-        }
-    }
 }
-    }
 
