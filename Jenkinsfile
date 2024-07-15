@@ -1,5 +1,7 @@
 pipeline {
     agent any
+    parameters {
+        choice(name: 'ACTION', choices: 'apply\ndestroy', description: 'Select apply or destroy')
 
     stages {
         stage('Git Checkout') {
@@ -18,24 +20,26 @@ pipeline {
                 bat ('type tfplan.txt')
             }
         }
-        stage("Choose Action") {
+        stages {
+        stage('Build') {
             steps {
                 script {
-                    def userInput = input(
-                        message: 'Choose an action:',
-                        parameters: [
-                            choice(name: 'ACTION', choices: 'apply \n destroy', description: 'Select apply or destroy')
-                        ]
-                    )
-                    if (userInput  == 'apply') {
+                    if (params.ACTION == 'apply') {
                         echo "Applying Terraform changes"
-                        bat ('terraform apply --auto-approve')
-                    } else if (userInput  == 'destroy') {
+                        bat 'terraform apply --auto-approve'
+                    } else if (params.ACTION == 'destroy') {
                         echo "Destroying Terraform resources"
-                        bat ('terraform destroy --auto-approve')
+                        bat 'terraform destroy --auto-approve'
                     }
                 }
             }
         }
+    }
+    post {
+        always {
+            echo "Build completed!"
+        }
+    }
+}
     }
 }
