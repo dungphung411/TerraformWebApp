@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/dungphung411/Terraform-Blog.git'
+                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/dungphung411/TerraformWebApp.git'
             }
         }
         stage("Terraform Init") {
