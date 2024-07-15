@@ -24,13 +24,13 @@ pipeline {
                     def userInput = input(
                         message: 'Choose an action:',
                         parameters: [
-                            choice(name: 'ACTION', choices: 'apply\ndestroy', description: 'Select apply or destroy')
+                            choice(name: 'ACTION', choices: 'apply \n destroy', description: 'Select apply or destroy')
                         ]
                     )
-                    if (userInput.ACTION == 'apply') {
+                    if (userInput  == 'apply') {
                         echo "Applying Terraform changes"
                         bat ('terraform apply --auto-approve')
-                    } else if (userInput.ACTION == 'destroy') {
+                    } else if (userInput  == 'destroy') {
                         echo "Destroying Terraform resources"
                         bat ('terraform destroy --auto-approve')
                     }
