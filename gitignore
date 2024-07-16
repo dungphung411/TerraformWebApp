@@ -17,3 +17,5 @@ crash.log
 # Ignore temporary files
 *.tmp
 *.swp
+
+tfplan.txt
