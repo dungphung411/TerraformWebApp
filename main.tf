@@ -28,9 +28,10 @@ resource "aws_instance" "ec2_public" {
           sudo apt update
           sudo apt install -y nginx 
           sudo systemctl start nginx
+          sudo systemctl enable nginx
           sudo systemctl status nginx 
           echo "<h1>Hello World</h1>" > /usr/share/nginx/html/index.html
-        EOF
+  EOF
 
   #iam_instance_profile = "${aws_iam_instance_profile.some_profile.id}"
   lifecycle {

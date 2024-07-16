@@ -6,3 +6,7 @@ output "instance_id" {
 output "public_ip" {
   value = aws_instance.ec2_public.public_ip
 }
+output "Ten_May" {
+    value = aws_instance.  
+}
+    
