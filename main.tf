@@ -25,6 +25,10 @@ resource "aws_instance" "ec2_public" {
   tags = {
     "Name" = "EC2"
   }
+  #iam_instance_profile = "${aws_iam_instance_profile.some_profile.id}"
+  lifecycle {
+    create_before_destroy = true
+  }
   
   user_data = <<-EOF
            #!/bin/bash
@@ -36,15 +40,6 @@ resource "aws_instance" "ec2_public" {
           sudo systemctl status nginx 
           echo "<h1>Hello World</h1>" > /usr/share/nginx/html/index.html
   EOF
-
-  #iam_instance_profile = "${aws_iam_instance_profile.some_profile.id}"
-  lifecycle {
-    create_before_destroy = true
-  }
-
-
-
- 
 }
 
 
