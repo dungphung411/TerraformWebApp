@@ -31,8 +31,7 @@ resource "aws_instance" "ec2_public" {
   }
   
   user_data = <<-EOF
-           #!/bin/bash
-          sudo su 
+          #!/bin/bash 
           sudo apt update
           sudo apt install -y nginx 
           sudo systemctl start nginx
