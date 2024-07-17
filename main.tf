@@ -22,6 +22,10 @@ resource "aws_instance" "ec2_public" {
   security_groups             = ["${aws_security_group.ssh-security-group.id}"]
   subnet_id                   = aws_subnet.public-subnet-1.id
   associate_public_ip_address = true
+  tags = {
+    "Name" = "EC2"
+  }
+  
   user_data = <<-EOF
            #!/bin/bash
           sudo su 
@@ -39,10 +43,7 @@ resource "aws_instance" "ec2_public" {
   }
 
 
-  tags = {
-    "Name" = "EC2-PUBLIC_demo"
-  }
-  
+
  
 }
 
